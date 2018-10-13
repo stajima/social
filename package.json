@@ -1,0 +1,24 @@
+{
+  "name": "social",
+  "version": "1.0.0",
+  "description": "Open chat web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stajima/social.git"
+  },
+  "author": "Shane Tajima",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stajima/social/issues"
+  },
+  "homepage": "https://github.com/stajima/social#readme",
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
