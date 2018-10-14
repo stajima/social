@@ -1,6 +1,7 @@
 <template>
   <div>
-    <registration v-if="!loggedIn" />
+    {{ nickname }}
+    <registration v-bind:nickname="nickname" v-if="!loggedIn" />
     <app-view v-else />
   </div>
 </template>
@@ -10,14 +11,15 @@ import AppView from './AppView.vue'
 import Registration from './Registration.vue'
 
 export default {
+  data () {
+    return {
+      loggedIn: false,
+      nickname: 'test',
+    }
+  },
   components: {
     AppView,
     Registration,
   },
-  data: function () {
-    return {
-      loggedIn: false,
-    }
-  }
 }
 </script>
