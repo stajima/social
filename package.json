@@ -4,7 +4,7 @@
   "description": "Open chat web app",
   "main": "server/server.js",
   "scripts": {
-    "start-dev": "webpack --config configs/webpack.dev.js & node server/server.js",
+    "start-dev": "webpack-dev-server --config configs/webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/stajima/social#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "html-webpack-plugin": "^3.2.0",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.2",
     "vue-router": "^3.0.1",
@@ -36,6 +37,7 @@
     "eslint-plugin-import": "^2.14.0",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.17",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
   }
 }
