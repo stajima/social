@@ -1,24 +1,27 @@
 const Users = {
   1: {
     id: 1,
+    name: 'Jane',
     count: 2,
     todos: [
       { id: 1, text: 'Vue.js' },
       { id: 2, text: 'Front-end dev' },
     ],
-    friends: [2],
+    friends: [{ id: 2, name: 'Shane' }],
   },
   2: {
     id: 2,
+    name: 'Shane',
     count: 2,
     todos: [
       { id: 1, text: 'Angular.js' },
       { id: 2, text: 'Back-end dev' },
     ],
-    friends: [1],
+    friends: [{ id: 1, name: 'Jane' }],
   },
   3: {
     id: 3,
+    name: 'John',
     count: 2,
     todos: [
       { id: 1, text: 'Backbone.js' },
