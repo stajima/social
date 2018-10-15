@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const Users = {
   1: {
     id: 1,
@@ -33,7 +35,8 @@ const Users = {
 
 export default {
   getList(userId) {
-    return Users[userId];
+    // return Users[userId];
+    return axios(`http://localhost:8000/api/users/${userId}`).then(res => res.data);
   },
   removeTodo(userId, todoId) {
     const userData = Users[userId];

@@ -71,10 +71,11 @@ export default {
         return;
       }
       this.currentListId = id;
-      const data = this.getTodoList(this.currentListId);
-      this.shownTodos = data.todos;
+      this.getUserData(this.currentListId).then((data) => {
+        this.shownTodos = data.todos;
+      });
     },
-    getTodoList(id) {
+    getUserData(id) {
       return TodoService.getList(id);   
     },
   },
@@ -82,10 +83,12 @@ export default {
     ListItem,
   },
   created: function () {
-    const data = this.getTodoList(this.userId);
-    this.user = data;
-    this.shownTodos = this.user.todos;
-    this.currentListId = this.user.id;
+    return this.getUserData(this.userId)
+    .then((data) => {
+      this.user = data;
+      this.shownTodos = this.user.todos;
+      this.currentListId = this.user.id;
+    });
   },
 }
 </script>
