@@ -13,6 +13,7 @@
           <ListItem 
             v-for="(todo, index) in todos" 
             v-bind:todo="todo"
+            v-bind:userId="userId"
             v-bind:key="index"
           />
         </transition-group>
@@ -31,27 +32,25 @@ export default {
   data () {
     return {
       todo: '',
+      userId: 1,
       todos: [],
-      friends: []
+      friends: [],
     }
   },
   methods: {
-    // addtodo() {
-    //   this.$validator.validateAll().then((result) => {
-    //     if (result) {
-    //       this.todos.push({ todo: this.todo });
-    //       this.todo = '';
-    //     }
-    //   });
-    // },
-    // remove(id) {
-    //   this.todos.splice(id, 1);
-    // }
+    addtodo() {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.todos.push({ todo: this.todo });
+          this.todo = '';
+        }
+      });
+    }
   },
   components: {
     ListItem,
   },
-  created: function (id = 1) {
+  created: function (id = this.userId) {
     const data = TodoService.getList(id);
     this.todos = data.todos;
     this.friends = data.friends;

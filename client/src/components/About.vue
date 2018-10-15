@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>This is an about page</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ali...</p>
+    <h1>Vue Todo List</h1>
+    <small>By Shane Tajima</small>
+    <p>This is a Todo List using Vue.js, NodeJS, ExpressJS, eslint, and Webpack.</p>
   </div>
 </template>
