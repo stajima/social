@@ -14,13 +14,33 @@ const User = mongoose.model('User', {
   ],
 });
 
-// const addNewTodo = (data) => {
+const addNewTodo = (userId, newTodoData, callback) => {
+  User.findOne({ id: userId }, (error, userData) => {
+    if (error) {
+      callback(error);
+    } else {
+      const updatedUserData = {
+        count: userData.count + 1,
+        todos: [...userData.todos],
+      };
+      updatedUserData.todos.push({ id: updatedUserData.count, ...newTodoData });
+      User.updateOne({ id: userId }, updatedUserData, callback);
+    }
+  });
+};
 
-// };
-
-// const deleteTodo = (userId, todoId) => {
-
-// };
+const deleteTodo = (userId, todoId, callback) => {
+  User.findOne({ id: userId }, (error, userData) => {
+    if (error) {
+      callback(error);
+    } else {
+      const updatedUserData = {
+        todos: [...userData.todos].filter(todo => todo.id !== Number(todoId)),
+      };
+      User.updateOne({ id: userId }, updatedUserData, callback);
+    }
+  });
+};
 
 const getUserData = (userId, callback) => {
   User.findOne({ id: userId }, (error, res) => {
@@ -33,7 +53,7 @@ const getUserData = (userId, callback) => {
 };
 
 module.exports = {
-  // addNewTodo,
-  // deleteTodo,
+  addNewTodo,
+  deleteTodo,
   getUserData,
 };

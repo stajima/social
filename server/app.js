@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
-const { getUserData } = require('./database');
+const bodyParser = require('body-parser');
+const { getUserData, addNewTodo, deleteTodo } = require('./database');
 
 const app = express();
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/api/users/:id', (req, res, next) => {
@@ -15,9 +17,20 @@ app.get('/api/users/:id', (req, res, next) => {
   });
 });
 
-app.delete('/api/users/:id', (req, res) => {
-  console.log('delete::');
+app.post('/api/users/:id', (req, res, next) => {
+  console.log('POST todo::');
+  addNewTodo(req.params.id, req.body, next);
+}, (req, res) => {
+  console.log('no errors');
+  res.status(201).end();
+});
 
+app.delete('/api/users/:userId/todos/:todoId', (req, res, next) => {
+  console.log('delete::');
+  deleteTodo(req.params.userId, req.params.todoId, next);
+}, (req, res) => {
+  console.log('no errors');
+  res.end();
 });
 
 module.exports = app;
