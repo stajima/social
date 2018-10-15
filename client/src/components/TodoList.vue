@@ -9,7 +9,7 @@
     </select>
     <span>Friend ID: {{ selectedFriend }}</span>
     <div class="holder">
-      <form v-if="currentListId == userId" @submit.prevent="addtodo">
+      <form v-if="currentListId == user.id" @submit.prevent="addtodo">
         <input autocomplete="off" type="text" placeholder="Enter a item..." v-model="todo" v-validate="'min:3'" name="todo">
         <transition name="alert-in">
           <p class="alert" v-if="errors.has('todo')">{{ errors.first('todo') }}</p>
@@ -17,13 +17,13 @@
       </form>
 
       <ul>
-        <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+        <transition-group tag="ul" name="list" enter-active-class="animated bounceInUp">
           <ListItem 
-            v-for="(todo, index) in shownTodos" 
+            v-for="todo in shownTodos" 
             v-bind:todo="todo"
             v-bind:userId="userId"
             v-bind:deletable="currentListId == userId"
-            v-bind:key="index"
+            v-bind:key="`currentListId${currentListId}itemId${todo.id}`"
           />
         </transition-group>
       </ul>
@@ -35,7 +35,7 @@
 <script>
 import ListItem from '../components/ListItem.vue';
 import TodoService from '../services/TodoService.js';
-
+const DEFAULTID = 1;
 export default {
   name: 'TodoList',
   data () {
@@ -58,14 +58,14 @@ export default {
     addtodo() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          TodoService.addTodo(this.userId, { text: this.todo });
+          TodoService.addTodo(this.user.id, { text: this.todo });
           this.todo = '';
         }
       });
     },
     onUserSelect(id) {
       if (!id) {
-        this.currentListId = this.userId;
+        this.currentListId = this.user.id;
         this.shownTodos = this.user.todos;
         return;
       }
@@ -80,7 +80,7 @@ export default {
   components: {
     ListItem,
   },
-  created: function (id = this.userId) {
+  created: function (id = DEFAULTID) {
     const data = this.getTodoList(id);
     this.user = data;
     this.shownTodos = this.user.todos;
