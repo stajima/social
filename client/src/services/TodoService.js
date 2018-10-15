@@ -1,25 +1,28 @@
 const Users = {
   1: {
     id: 1,
+    count: 2,
     todos: [
-      { text: 'Vue.js' },
-      { text: 'Front-end dev' },
+      { id: 1, text: 'Vue.js' },
+      { id: 2, text: 'Front-end dev' },
     ],
     friends: [2],
   },
   2: {
     id: 2,
+    count: 2,
     todos: [
-      { text: 'Angular.js' },
-      { text: 'Back-end dev' },
+      { id: 1, text: 'Angular.js' },
+      { id: 2, text: 'Back-end dev' },
     ],
     friends: [1],
   },
   3: {
     id: 3,
+    count: 2,
     todos: [
-      { text: 'Backbone.js' },
-      { text: 'CSS Wiz' },
+      { id: 1, text: 'Backbone.js' },
+      { id: 2, text: 'CSS Wiz' },
     ],
     friends: [],
   },
@@ -28,5 +31,12 @@ const Users = {
 export default {
   getList(userId) {
     return Users[userId];
+  },
+  removeTodo(userId, todoId) {
+    const userData = Users[userId];
+    if (userData) {
+      const index = userData.todos.find(todo => todo.id === todoId);
+      userData.todos.splice(index, 1);
+    }
   },
 };
