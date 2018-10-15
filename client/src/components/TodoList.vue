@@ -19,7 +19,7 @@
       </form>
 
       <ul>
-        <transition-group tag="ul" name="list" enter-active-class="animated bounceInUp">
+        <transition-group name="list" enter-active-class="animated bounceInUp">
           <ListItem 
             v-for="todo in shownTodos" 
             v-bind:todo="todo"
@@ -37,6 +37,8 @@
 <script>
 import ListItem from '../components/ListItem.vue';
 import TodoService from '../services/TodoService.js';
+import io from '../../../node_modules/socket.io-client/dist/socket.io.js';
+
 export default {
   name: 'TodoList',
   data () {
@@ -62,7 +64,7 @@ export default {
           TodoService.addTodo(this.user.id, { text: this.todo });
           this.todo = '';
         }
-      });
+      }); 
     },
     onUserSelect(id) {
       if (!id) {
@@ -91,4 +93,5 @@ export default {
     });
   },
 }
+var socket = io();
 </script>
