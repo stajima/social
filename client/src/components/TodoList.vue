@@ -61,7 +61,10 @@ export default {
     addtodo() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          TodoService.addTodo(this.user.id, { text: this.todo });
+          TodoService.addTodo(this.user.id, { text: this.todo })
+          .then(() => this.getUserData(this.currentListId).then((data) => {
+            this.shownTodos = data.todos;
+          }));
           this.todo = '';
         }
       }); 

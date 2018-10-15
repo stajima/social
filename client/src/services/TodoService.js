@@ -47,11 +47,7 @@ export default {
     }
   },
   addTodo(userId, data) {
-    const userData = Users[userId];
-    if (userData) {
-      userData.count += 1;
-      const newTodo = { id: userData.count, ...data };
-      userData.todos.push(newTodo);
-    }
+    console.log('addTodo');
+    return axios.post(`/api/users/${userId}`, data);
   },
 };
