@@ -37,6 +37,15 @@ export default {
     if (userData) {
       const index = userData.todos.find(todo => todo.id === todoId);
       userData.todos.splice(index, 1);
+      userData.count -= 1;
+    }
+  },
+  addTodo(userId, data) {
+    const userData = Users[userId];
+    if (userData) {
+      userData.count += 1;
+      const newTodo = { id: userData.count, ...data };
+      userData.todos.push(newTodo);
     }
   },
 };
