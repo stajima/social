@@ -16,7 +16,6 @@ export default {
   },
   methods: {
     remove(todoId) {
-      console.log(this.userId, todoId);
       TodoService.removeTodo(this.userId, todoId)
     }
   },
