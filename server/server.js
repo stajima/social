@@ -1,10 +1,15 @@
 const http = require('http');
-const io = require('socket.io')(http);
+const socket = require('socket.io');
 const app = require('./app');
 
 const server = http.Server(app);
+const io = socket(server);
+
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 
