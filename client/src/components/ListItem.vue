@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     remove(todoId) {
-      TodoService.removeTodo(this.userId, todoId)
+      TodoService.removeTodo(this.userId, todoId).then(() => this.$emit('reloadUserData'));
     }
   },
 }

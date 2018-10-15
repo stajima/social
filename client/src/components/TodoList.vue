@@ -21,6 +21,7 @@
       <ul>
         <transition-group name="list" enter-active-class="animated bounceInUp">
           <ListItem 
+            v-on:reloadUserData="onUserSelect(currentListId)"
             v-for="todo in shownTodos" 
             v-bind:todo="todo"
             v-bind:userId="userId"
