@@ -4,9 +4,9 @@
   "description": "todo list with vue",
   "main": "server/server.js",
   "scripts": {
-    "vue-dev": "webpack-dev-server --config configs/webpack.dev.js",
+    "vue-dev": "webpack --config configs/webpack.dev.js",
     "dev-server": "nodemon server/server.js",
-    "webpack-prod": "webpack --config configs/webpack.prod.js",
+    "webpack-prod": "webpack --config configs/webpack.common.js",
     "prod-server": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
