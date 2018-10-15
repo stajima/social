@@ -1,19 +1,20 @@
 <template>
   <div id="hello">
     <div class="holder">
-      <form @submit.prevent="addSkill">
-        <input type="text" placeholder="Enter a item..." v-model="skill" v-validate="'min:3'" name="skill">
+      <form @submit.prevent="addtodo">
+        <input type="text" placeholder="Enter a item..." v-model="todo" v-validate="'min:3'" name="todo">
         <transition name="alert-in">
-          <p class="alert" v-if="errors.has('skill')">{{ errors.first('skill') }}</p>
+          <p class="alert" v-if="errors.has('todo')">{{ errors.first('todo') }}</p>
         </transition>
       </form>
 
       <ul>
         <transition-group name="list" enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
-          <li v-for="(data, index) in skills" :key='index'>
-            {{ data.skill }}
-            <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
-          </li>
+          <ListItem 
+            v-for="(todo, index) in todos" 
+            v-bind:todo="todo"
+            v-bind:key="index"
+          />
         </transition-group>
       </ul>
       <p>These are things you need to do!</p>
@@ -22,29 +23,38 @@
 </template>
 
 <script>
+import ListItem from '../components/ListItem.vue';
+import TodoService from '../services/TodoService.js';
+
 export default {
   name: 'TodoList',
   data () {
     return {
-      skill: '',
-      skills: [
-        {skill: "Vue.js" },
-        {skill: "Front-end dev" },
-      ]
+      todo: '',
+      todos: [],
+      friends: []
     }
   },
   methods: {
-    addSkill() {
-      this.$validator.validateAll().then((result) => {
-        if (result) {
-          this.skills.push({ skill: this.skill });
-          this.skill = '';
-        }
-      });
-    },
-    remove(id) {
-      this.skills.splice(id, 1);
-    }
-  }
+    // addtodo() {
+    //   this.$validator.validateAll().then((result) => {
+    //     if (result) {
+    //       this.todos.push({ todo: this.todo });
+    //       this.todo = '';
+    //     }
+    //   });
+    // },
+    // remove(id) {
+    //   this.todos.splice(id, 1);
+    // }
+  },
+  components: {
+    ListItem,
+  },
+  created: function (id = 1) {
+    const data = TodoService.getList(id);
+    this.todos = data.todos;
+    this.friends = data.friends;
+  },
 }
 </script>
