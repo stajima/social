@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Welcome {{ user.name }}</h1>
     <select id="softflow" v-model="selectedFriend" v-on:change="onUserSelect(selectedFriend)">
       <option v-if="currentListId == userId" disabled value="">View a Friends List</option>
       <option v-else value="">View My List</option>
@@ -7,6 +8,7 @@
         {{ friend.name }}
       </option>
     </select>
+    <span>My ID: {{ userId }}</span>
     <span>Friend ID: {{ selectedFriend }}</span>
     <div class="holder">
       <form v-if="currentListId == user.id" @submit.prevent="addtodo">
@@ -35,7 +37,6 @@
 <script>
 import ListItem from '../components/ListItem.vue';
 import TodoService from '../services/TodoService.js';
-const DEFAULTID = 1;
 export default {
   name: 'TodoList',
   data () {
@@ -44,7 +45,7 @@ export default {
       shownTodos: [],
       currentListId: null,
       selectedFriend: '',
-      userId: 1,
+      userId: Number(this.$route.params.userId),
       user: {
         id: null,
         name: '',
@@ -80,8 +81,8 @@ export default {
   components: {
     ListItem,
   },
-  created: function (id = DEFAULTID) {
-    const data = this.getTodoList(id);
+  created: function () {
+    const data = this.getTodoList(this.userId);
     this.user = data;
     this.shownTodos = this.user.todos;
     this.currentListId = this.user.id;
