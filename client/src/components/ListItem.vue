@@ -1,7 +1,7 @@
 <template>
   <li>
     {{ todo.text }}
-    <i class="fa fa-minus-circle" v-on:click="remove(todo.id)"></i>
+    <i v-if="deletable" class="fa fa-minus-circle" v-on:click="remove(todo.id)"></i>
   </li>
 </template>
 
@@ -13,6 +13,7 @@ export default {
   props: {
     todo: Object,
     userId: Number,
+    deletable: Boolean,
   },
   methods: {
     remove(todoId) {
