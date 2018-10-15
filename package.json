@@ -4,7 +4,8 @@
   "description": "todo list with vue",
   "main": "server/server.js",
   "scripts": {
-    "start-dev": "webpack-dev-server --config configs/webpack.dev.js",
+    "vue-dev": "webpack-dev-server --config configs/webpack.dev.js",
+    "dev-server": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,8 @@
   "dependencies": {
     "express": "^4.16.4",
     "html-webpack-plugin": "^3.2.0",
+    "mongoose": "^5.3.4",
+    "nodemon": "^1.18.4",
     "vee-validate": "^2.1.0-beta.11",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.2",
