@@ -19,11 +19,9 @@ const activeUsers = {};
 io.on('connection', (socket) => {
   const { userId, friends } = socket.handshake.query;
   activeUsers[userId] = JSON.parse(friends);
-  console.log('user', userId, 'logged in');
 });
 
 app.get('/api/users/:id', (req, res, next) => {
-  console.log('get::');
   getUserData(req.params.id, (error, data) => {
     if (error) {
       next(error);
@@ -33,21 +31,15 @@ app.get('/api/users/:id', (req, res, next) => {
 });
 
 app.post('/api/users/:id', (req, res, next) => {
-  console.log('POST todo::');
   addNewTodo(req.params.id, req.body, next);
 }, (req, res) => {
-  console.log('Add todo successful');
-  console.log('Emitting refresh event');
   io.emit('refresh', req.params.id);
   res.status(201).end();
 });
 
 app.delete('/api/users/:userId/todos/:todoId', (req, res, next) => {
-  console.log('delete::');
   deleteTodo(req.params.userId, req.params.todoId, next);
 }, (req, res) => {
-  console.log('Delete todo successful');
-  console.log('Emitting refresh event');
   io.emit('refresh', req.params.userId);
   res.end();
 });
