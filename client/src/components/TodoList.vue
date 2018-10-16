@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Welcome {{ user.name }}</h1>
-    <select id="softflow" v-model="selectedFriend" v-on:change="onUserSelect(selectedFriend)">
+    <select v-model="selectedFriend" v-on:change="onUserSelect(selectedFriend)">
       <option v-if="currentListId == userId" disabled value="">View a Friends List</option>
       <option v-else value="">View My List</option>
       <option v-bind:key="friend.id" v-for="friend in user.friends" v-bind:value="friend.id">
