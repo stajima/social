@@ -4,6 +4,7 @@
   "description": "todo list with vue",
   "main": "server/server.js",
   "scripts": {
+    "start": "webpack --config configs/webpack.prod.js & node server/server.js",
     "vue-dev": "webpack --config configs/webpack.dev.js",
     "dev-server": "nodemon server/server.js",
     "webpack-prod": "webpack --config configs/webpack.common.js",
