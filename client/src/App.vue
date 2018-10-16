@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <Nav /> -->
     <router-view/>
   </div>
 </template>
@@ -11,7 +10,6 @@ import TodoList from './components/TodoList.vue';
 
 export default {
   components: {
-    // Nav,
     TodoList,
   },
 }
