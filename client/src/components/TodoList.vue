@@ -8,8 +8,6 @@
         {{ friend.name }}
       </option>
     </select>
-    <span>My ID: {{ userId }}</span>
-    <span>Friend ID: {{ selectedFriend }}</span>
     <div class="holder">
       <form v-if="currentListId == user.id" @submit.prevent="addtodo">
         <input autocomplete="off" type="text" placeholder="Enter a item..." v-model="todo" v-validate="'min:3'" name="todo">
@@ -39,7 +37,7 @@
 import ListItem from '../components/ListItem.vue';
 import TodoService from '../services/TodoService.js';
 import io from '../../../node_modules/socket.io-client/dist/socket.io.js';
-
+let socket;
 export default {
   name: 'TodoList',
   data () {
@@ -94,8 +92,21 @@ export default {
       this.user = data;
       this.shownTodos = this.user.todos;
       this.currentListId = this.user.id;
-    });
+      const friendsJSON = JSON.stringify(this.user.friends.map(friend => friend.id));
+      socket = io.connect({ 
+        query: {
+          userId: this.userId,
+          friends: friendsJSON,
+        }
+      });
+      socket.on('refresh', (id) => {
+        if (id !== this.user.id && Number(id) === this.currentListId) {
+          this.getUserData(this.currentListId).then((data) => {
+            this.shownTodos = data.todos;
+          });
+        }
+      });
+    }); 
   },
 }
-var socket = io();
 </script>

@@ -1,15 +1,55 @@
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const http = require('http');
-const socket = require('socket.io');
-const app = require('./app');
+const socketIO = require('socket.io');
+const { getUserData, addNewTodo, deleteTodo } = require('./database');
 
+
+const app = express();
 const server = http.Server(app);
-const io = socket(server);
+const io = socketIO(server);
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+const activeUsers = {};
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  const { userId, friends } = socket.handshake.query;
+  activeUsers[userId] = JSON.parse(friends);
+  console.log('user', userId, 'logged in');
+});
+
+app.get('/api/users/:id', (req, res, next) => {
+  console.log('get::');
+  getUserData(req.params.id, (error, data) => {
+    if (error) {
+      next(error);
+    }
+    res.send(data).end();
   });
+});
+
+app.post('/api/users/:id', (req, res, next) => {
+  console.log('POST todo::');
+  addNewTodo(req.params.id, req.body, next);
+}, (req, res) => {
+  console.log('Add todo successful');
+  console.log('Emitting refresh event');
+  io.emit('refresh', req.params.id);
+  res.status(201).end();
+});
+
+app.delete('/api/users/:userId/todos/:todoId', (req, res, next) => {
+  console.log('delete::');
+  deleteTodo(req.params.userId, req.params.todoId, next);
+}, (req, res) => {
+  console.log('Delete todo successful');
+  console.log('Emitting refresh event');
+  io.emit('refresh', req.params.userId);
+  res.end();
 });
 
 
