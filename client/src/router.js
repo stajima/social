@@ -10,6 +10,6 @@ export default new Router({
       path: '/:userId',
       name: 'todolist',
       component: TodoList,
-    }
+    },
   ],
 });
