@@ -1,13 +1,14 @@
 <template>
   <div>
     <h1>Welcome {{ user.name }}</h1>
-    <select v-model="selectedFriend" v-on:change="onUserSelect(selectedFriend)">
-      <option v-if="currentListId == userId" disabled value="">View a Friends List</option>
-      <option v-else value="">View My List</option>
-      <option v-bind:key="friend.id" v-for="friend in user.friends" v-bind:value="friend.id">
-        {{ friend.name }}
-      </option>
-    </select>
+
+    <FriendSelect 
+      v-on:selectedFriend="onUserSelect($event)" 
+      v-bind:friends="user.friends" 
+      v-bind:userId="userId" 
+      v-bind:currentListId="currentListId"
+    />
+
     <div class="holder">
       <form v-if="currentListId == user.id" @submit.prevent="addtodo">
         <input autocomplete="off" type="text" placeholder="Enter a item..." v-model="todo" v-validate="'min:3'" name="todo">
@@ -28,6 +29,7 @@
           />
         </transition-group>
       </ul>
+
       <p>These are things you need to do!</p>
     </div>
   </div>
@@ -35,8 +37,10 @@
 
 <script>
 import ListItem from '../components/ListItem.vue';
+import FriendSelect from '../components/FriendSelect.vue';
 import TodoService from '../services/TodoService.js';
 import io from '../../../node_modules/socket.io-client/dist/socket.io.js';
+
 let socket;
 export default {
   name: 'TodoList',
@@ -45,7 +49,6 @@ export default {
       todo: '',
       shownTodos: [],
       currentListId: null,
-      selectedFriend: '',
       userId: Number(this.$route.params.userId),
       user: {
         id: null,
@@ -85,6 +88,7 @@ export default {
   },
   components: {
     ListItem,
+    FriendSelect,
   },
   created: function () {
     return this.getUserData(this.userId)
